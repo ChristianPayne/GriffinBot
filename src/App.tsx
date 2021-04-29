@@ -1,5 +1,9 @@
 import './App.css';
+import {GriffinBot} from "./griffinbot";
 
+const griffinBot = new GriffinBot();
+
+griffinBot.Start();
 
 function App() {
   return (
