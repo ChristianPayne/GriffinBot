@@ -3,11 +3,24 @@ const tmi = require('tmi.js');
 
 export class GriffinBot {
 
-  obs = new OBSWebSocket();
+  private static _instance: GriffinBot;
+  public get instance() : GriffinBot {return GriffinBot._instance;}
+  public set instance(instance: GriffinBot) {if(GriffinBot._instance) return; GriffinBot._instance = instance;}
+  
 
-  async Start () {
+  obs = new OBSWebSocket();
+  client;
+  messages: String[] = [];
+  log: Function = (message: string) => {
+    this.messages.push(message);
+  }
+
+  async Start (messagesState) {
+    this.instance = this;
+    
+
     try {
-      const client = new tmi.Client({
+      this.client = new tmi.Client({
         options: { debug: true, messagesLogLevel: "info" },
         connection: {
           reconnect: true,
@@ -20,48 +33,53 @@ export class GriffinBot {
         channels: [ process.env.REACT_APP_CHANNELS ]
       });
 
-      client.connect().catch(console.error);
+      this.client.connect().catch(console.error);
 
-      client.on('message', (channel, tags, message, self) => {
+      this.client.on('message', (channel, tags, message, self) => {
         if(self) return;
+        
         if(message.toLowerCase() === '!hello') {
-          client.say(channel, `@${tags.username}, heya!`);
+          this.client.say(channel, `@${tags.username}, heya!`);
+          this.instance.log("TEST");
         }
+        console.log(this.messages);
+        
+        messagesState(this.messages);
       });
     } catch (err) {
-      console.log(err);
+      this.log(err);
     }
 
     try {
       await this.obs.connect({ address: process.env.REACT_APP_OBS_ADDRESS, password: process.env.REACT_APP_OBS_PASSWORD });
       
-      console.log(`Success! We're connected & authenneticated.`);
+      this.log(`Success! We're connected & authenneticated.`);
         
       const getSceneList = await this.obs.send('GetSceneList');
 
-      console.log(`${getSceneList.scenes.length} Available Scenes!`);
+      this.log(`${getSceneList.scenes.length} Available Scenes!`);
         
-      getSceneList.scenes.forEach(scene => {
-        if (scene.name !== getSceneList.currentScene) {
-          console.log(`Found a different scene! Switching to Scene: ${scene.name}`);
+      // getSceneList.scenes.forEach(scene => {
+      //   if (scene.name !== getSceneList.currentScene) {
+      //     this.log(`Found a different scene! Switching to Scene: ${scene.name}`);
           
-          this.obs.send('SetCurrentScene', {
-            'scene-name': scene.name
-          });
-        }
-      });
+      //     this.obs.send('SetCurrentScene', {
+      //       'scene-name': scene.name
+      //     });
+      //   }
+      // });
     } catch (err) {
       //Promise convention dictates you have a catch on every chain.
-      console.log(err);
+      this.log(err);
     }
     
     this.obs.on('SwitchScenes', data => {
-      console.log(`New Active Scene: ${data.sceneName}`);
+      this.log(`New Active Scene: ${data.sceneName}`);
     });
     
     // You must add this handler to avoid uncaught exceptions.
     this.obs.on('error', err => {
-      console.error('socket error:', err);
+      this.log('socket error:', err);
     });
   }
 }
