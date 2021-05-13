@@ -20,7 +20,7 @@
     {#each botSettings as setting}
       {#if setting.section === section}
         <hr>
-        <div class="flex">
+        <div class="space-between">
           <p>{setting.name}</p>
           
           {#if setting.type}
@@ -42,38 +42,11 @@
   {/each}
   
   
-  <div class="center">
+  <div class="flex">
     <button on:click={()=>{saveSettings(botSettings)}}>Save Settings</button>
   </div>
 </div>
 
 <style>
-  .flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .flex * {
-    margin: 1em;
-  }
-
-  .center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  button {
-    padding: 1em;
-  }
-
-  input {
-    padding: 0.5em;
-  }
-
-  h2 {
-    margin-left: 0.5em;
-    font-size: 1.5em;
-    font-weight: lighter;
-  }
+  
 </style>

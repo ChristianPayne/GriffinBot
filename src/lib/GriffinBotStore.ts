@@ -1,25 +1,30 @@
 import { writable } from "svelte/store";
+import { goto } from "$app/navigation";
 export const activeLayerLoaded = writable(false);
 
 export const settings = writable([]);
 
-// Set to local storage.
-export function setActiveLayer (layerName: string) {
-  if(layerName) window.location.href = layerName;
+export function navigateToPath (path: string) {
+  goto(path);
 }
 
 // Get from local storage.
 export async function getActiveLayer () {
+  const ignoredpaths = ["/", "/layer", "/settings"];
+
   if(typeof(window) === 'undefined') return;
-  if(window.location.pathname === '/') return;
-  if(window.location.pathname === '/settings') return;
+  const pathname = window.location.pathname;
+  console.log(pathname);
+  
+
+  if(ignoredpaths.find(path => path === pathname)) return;
   
   activeLayerLoaded.update(()=>true);
 }
 
 // Clear local storage.
 export function clearActiveLayer () {
-  window.location.href = '/';
+  navigateToPath('/layer');
 }
 
 export function saveSettings (settings) {
