@@ -3,11 +3,7 @@ export const activeLayerLoaded = writable(false);
 
 // Set to local storage.
 export function setActiveLayer (layerName: string) {
-  if(layerName)
-  {
-    window.location.href = layerName;
-    
-  }
+  if(layerName) window.location.href = layerName;
 }
 
 // Get from local storage.

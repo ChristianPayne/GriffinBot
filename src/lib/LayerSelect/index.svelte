@@ -3,22 +3,12 @@
 </script>
 
 <section>
-  {#if !$activeLayerLoaded}
-  
-  {:else}
+  {#if $activeLayerLoaded}
     <button on:click={clearActiveLayer}></button>
   {/if}
 </section>
 
 <style>
-  .flex {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-    background-color: var(--heading-color);
-  }
-
   button {
     position: absolute;
     top: 0%;

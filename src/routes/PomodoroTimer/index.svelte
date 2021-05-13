@@ -1,1 +1,81 @@
-<h1>Test</h1>
+<script context="module">
+  export const prerender = true;
+</script>
+
+<div id="timer" style="--percentage: {percentage}%; --color: {color}">&nbsp;</div>
+
+<style>
+  #timer {
+    display: inline-block;
+    max-width: 100%;
+    width: var(--percentage);
+    background-color: var(--color);
+    height: 100%;
+    padding-top: 50%;
+  }
+</style>
+
+<script lang="ts">
+  const countdownColor: string  = "#fff"
+  const countupColor: string  = "#000"
+  const refreshRate: number = 1000;
+  
+  let percentage: number = 100;
+  let color: string = countdownColor;
+
+  let refreshTicker = null;
+
+  let startTime: number;
+  let endTime: number;
+
+  // Use this to start a pomodoro timer.
+  export function startTimer (timerLength: number, countUp?: boolean) {
+    startTime = Date.now();
+    endTime = startTime + (timerLength * 1000);
+
+    
+    refreshTicker = setInterval(()=>{
+      color = countUp ? countupColor : countdownColor;
+      if(countUp) {
+        percentage = 100 - percentageLeft(startTime, endTime);
+      }
+      else{
+        percentage = percentageLeft(startTime, endTime);
+      }
+      
+
+      if(percentage >= 100){
+        stopTimer();
+        percentage = 100;
+      }
+      if(percentage <= 0)
+      {
+        stopTimer();
+        percentage = 0;
+      }
+    }, refreshRate);
+  }
+
+  export function stopTimer () {
+    startTime = 0;
+    endTime = 0;
+    percentage = 100;
+    color = countdownColor;
+
+    if(refreshTicker) {
+      clearInterval(refreshTicker);
+    }
+  }
+
+  function percentageLeft (startTime, endTime) : number{
+    let timeNow = Date.now();
+    let percent = 100 - ((timeNow - startTime) / (endTime - startTime) * 100);
+
+    // console.log(percent);
+
+    return percent;
+  }
+
+  // startTimer((25 * 60), true);
+  
+</script>
