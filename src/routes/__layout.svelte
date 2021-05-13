@@ -1,8 +1,9 @@
 <script lang="ts">
-	import '../app.css';
 	import LayerSelect from '$lib/LayerSelect/index.svelte';
-	import { getActiveLayer } from "$lib/GriffinBotStore";
+	import { getActiveLayer, loadSettings } from "$lib/GriffinBotStore";
 	getActiveLayer().catch((err)=>{console.error("Error getting active layer. ", err)});
+	
+  loadSettings();
 </script>
 
 <main>
