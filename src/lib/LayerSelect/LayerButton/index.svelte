@@ -1,12 +1,9 @@
 <script>
+  import { setActiveLayer } from "$lib/GriffinBotStore";
   export let layerName;
-
-  function onClick () {
-    localStorage.setItem("LayerName", layerName);
-  }
 </script>
 
-<button on:click={onClick}>{layerName}</button>
+<button on:click={()=>{setActiveLayer(layerName)}}>{layerName}</button>
 
 <style>
   button {

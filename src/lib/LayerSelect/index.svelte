@@ -1,21 +1,25 @@
 <script>
-// localStorage.setItem("Testing","This is the value.");
-// localStorage.clear();
-import LayerButton from "./LayerButton/index.svelte";
+  import LayerButton from "./LayerButton/index.svelte";
+  import { activeLayer, clearLocalStorage } from "$lib/GriffinBotStore";
 </script>
 
-<section>
-  <h1>Layer Select</h1>
-  <div class="flex">
-    <LayerButton layerName="Page 1"></LayerButton>
-    <LayerButton layerName="Page 2"></LayerButton>
-    <LayerButton layerName="Page 3"></LayerButton>
-    <LayerButton layerName="Page 4"></LayerButton>
-    <LayerButton layerName="Page 5"></LayerButton>
-    <LayerButton layerName="Page 6"></LayerButton>
-  </div>
-  <button>Clear localStorage</button>
-</section>
+{#if !$activeLayer}
+  <section>
+    <p>{$activeLayer}</p>
+    <h1>Layer Select</h1>
+    <div class="flex">
+      <LayerButton layerName="Page 1"></LayerButton>
+      <LayerButton layerName="Page 2"></LayerButton>
+      <LayerButton layerName="Page 3"></LayerButton>
+      <LayerButton layerName="Page 4"></LayerButton>
+      <LayerButton layerName="Page 5"></LayerButton>
+      <LayerButton layerName="Page 6"></LayerButton>
+    </div>
+  </section>
+  {/if}
+<div>
+  <button on:click={clearLocalStorage}>Clear localStorage</button>
+</div>
 
 <style>
   .flex {
