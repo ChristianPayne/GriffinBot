@@ -1,25 +1,24 @@
 <script>
   import LayerButton from "./LayerButton/index.svelte";
-  import { activeLayer, clearLocalStorage } from "$lib/GriffinBotStore";
+  import { activeLayer, clearActiveLayer } from "$lib/GriffinBotStore";
 </script>
 
-{#if !$activeLayer}
-  <section>
-    <p>{$activeLayer}</p>
-    <h1>Layer Select</h1>
-    <div class="flex">
-      <LayerButton layerName="Page 1"></LayerButton>
-      <LayerButton layerName="Page 2"></LayerButton>
-      <LayerButton layerName="Page 3"></LayerButton>
-      <LayerButton layerName="Page 4"></LayerButton>
-      <LayerButton layerName="Page 5"></LayerButton>
-      <LayerButton layerName="Page 6"></LayerButton>
-    </div>
-  </section>
+<section>
+  {#if !$activeLayer}
+  <h1>Layer Select</h1>
+  <div class="flex">
+    <LayerButton layerName="Layer 1"></LayerButton>
+    <LayerButton layerName="Layer 2"></LayerButton>
+    <LayerButton layerName="Layer 3"></LayerButton>
+    <LayerButton layerName="Layer 4"></LayerButton>
+    <LayerButton layerName="Layer 5"></LayerButton>
+    <LayerButton layerName="Layer 6"></LayerButton>
+  </div>
+  {:else}
+    <h1>{$activeLayer}</h1>
+    <button on:click={clearActiveLayer}>Clear active layer</button>
   {/if}
-<div>
-  <button on:click={clearLocalStorage}>Clear localStorage</button>
-</div>
+</section>
 
 <style>
   .flex {

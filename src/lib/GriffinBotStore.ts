@@ -8,7 +8,12 @@ export function setActiveLayer (layerName: string) {
   localStorage.setItem("LayerName", layerName);
 }
 
-export function clearLocalStorage () {
+export async function getActiveLayer () {
+  const layerName = await localStorage.getItem("LayerName");
+  setActiveLayer(layerName);
+}
+
+export function clearActiveLayer () {
   activeLayer.update(()=>"")
-  localStorage.clear();
+  localStorage.setItem("LayerName", "");
 }
