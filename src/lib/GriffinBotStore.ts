@@ -1,22 +1,24 @@
 import { writable } from "svelte/store";
+export const activeLayerLoaded = writable(false);
 
-export const activeLayer = writable("");
+// Set to local storage.
+export function setActiveLayer (layerName: string) {
+  if(layerName)
+  {
+    window.location.href = layerName;
+    
+  }
+}
 
 // Get from local storage.
-export function setActiveLayer (layerName: string) {
-  if(typeof(window) === 'undefined') return;
-  activeLayer.update(() => layerName);
-  localStorage.setItem("LayerName", layerName);
-}
-
 export async function getActiveLayer () {
   if(typeof(window) === 'undefined') return;
-  const layerName = await localStorage.getItem("LayerName");
-  setActiveLayer(layerName);
+  if(window.location.pathname === '/') return;
+  
+  activeLayerLoaded.update(()=>true);
 }
 
+// Clear local storage.
 export function clearActiveLayer () {
-  if(typeof(window) === 'undefined') return;
-  activeLayer.update(()=>"")
-  localStorage.setItem("LayerName", "");
+  window.location.href = '/';
 }

@@ -1,9 +1,10 @@
 <script>
   import { setActiveLayer } from "$lib/GriffinBotStore";
   export let layerName;
+  export let layerURL;
 </script>
 
-<button on:click={()=>{setActiveLayer(layerName)}}>{layerName}</button>
+<button on:click={()=>{setActiveLayer(layerURL)}}>{layerName}</button>
 
 <style>
   button {
