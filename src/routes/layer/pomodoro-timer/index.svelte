@@ -1,7 +1,3 @@
-<script context="module">
-  export const prerender = true;
-</script>
-
 <div id="timer" style="--percentage: {percentage}%; --color: {color}">&nbsp;</div>
 
 <style>
@@ -16,7 +12,8 @@
 </style>
 
 <script lang="ts">
-  const countdownColor: string  = "#fff"
+  import { getSetting } from "$lib/GriffinBotStore";
+  const countdownColor: string  = getSetting("Countdown Color");
   const countupColor: string  = "#000"
   const refreshRate: number = 1000;
   
@@ -31,7 +28,7 @@
   // Use this to start a pomodoro timer.
   export function startTimer (timerLength: number, countUp?: boolean) {
     startTime = Date.now();
-    endTime = startTime + (timerLength * 1000);
+    endTime = startTime + (timerLength * 60 * 1000);
 
     
     refreshTicker = setInterval(()=>{
@@ -76,6 +73,6 @@
     return percent;
   }
 
-  // startTimer((25 * 60), true);
+  // startTimer((25), true);
   
 </script>

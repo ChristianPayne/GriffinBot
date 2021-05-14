@@ -27,6 +27,12 @@ export function clearActiveLayer () {
   navigateToPath('/layer');
 }
 
+export function getSetting (settingName) {
+  let _settings;
+  settings.subscribe((settings)=>_settings = settings);
+  return _settings.find((setting)=>{return setting.name === settingName})?.value;
+}
+
 export function saveSettings (settings) {
   console.log(JSON.stringify(settings));
 }
@@ -47,20 +53,59 @@ export function loadSettings () {
       },
       {
         section: "Pomodoro",
-        name: "Timer Countdown Color",
+        name: "Countdown Color",
         type: "color",
-        value: "#000000"
+        value: "#ff00ff"
       },
       {
         section: "Pomodoro",
-        name: "Timer Countup Color",
+        name: "Break Color",
         type: "color",
         value: "#ffffff"
       },
       {
         section: "Pomodoro",
-        name: "Timer Refresh Interval (ms)",
+        name: "Refresh Interval (ms)",
         value: 50
+      },
+      {
+        section: "Pomodoro",
+        name: "Countdown Time (m)",
+        value: 25
+      },
+      {
+        section: "Pomodoro",
+        name: "Break Time (m)",
+        value: 10
+      },
+      {
+        section: "Pomodoro",
+        name: "Break Time (m)",
+        value: 10
+      },
+      {
+        section: "Pomodoro",
+        name: "Break Time (m)",
+        value: 10
+      },
+      {
+        section: "Pomodoro",
+        name: "Break Time (m)",
+        value: 10
+      },
+      {
+        section: "Pomodoro",
+        name: "Break Time (m)",
+        value: 10
+      },
+      {
+        section: "Pomodoro",
+        name: "Break Time (m)",
+        value: 10
+      },
+      {
+        name: "Unsorted",
+        value: 10
       },
     ]
   });

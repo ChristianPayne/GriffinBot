@@ -1,23 +1,23 @@
 <script lang="ts">
-	import { dev } from "$app/env";
-	import HomeButton from '$lib/HomeButton/index.svelte';
-	import { getActiveLayer, loadSettings } from "$lib/GriffinBotStore";
+	import { getActiveLayer, loadSettings, activeLayerLoaded } from "$lib/GriffinBotStore";
 	getActiveLayer().catch((err)=>{console.error("Error getting active layer. ", err)});
 	
   loadSettings();
+
+	let showFooter = false;
+	showFooter = !$activeLayerLoaded;
 </script>
 
 <main>
-	<section>
-		<HomeButton />
-	</section>
 	<slot></slot>
-	{#if dev}
+	{#if showFooter}
+		<div class="footer-space">&nbsp;</div>
 		<footer>
 			<hr>
 			<div class="space-between">
 				<div>
 					<a href="/">Home</a>
+					<span>|</span>
 					<a href="/layer">Layers</a>
 				</div>
 				<div>

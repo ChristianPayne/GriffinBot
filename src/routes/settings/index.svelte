@@ -1,13 +1,20 @@
+<script context="module">
+// export async function load({})
+</script>
+
 <script lang="ts">
   import '../../app.css';
-  import { settings, saveSettings} from "$lib/GriffinBotStore";
-  let botSettings = $settings;
+  let botSettings = [];
 
   function getSettingSections (): string[] {
     if(!botSettings) return;
 
-    let sortedSettings = botSettings.sort((a,b)=>{return a.section < b.section ? -1 : 1});
-    let sortedSections = sortedSettings.map(setting=>setting.section);
+    let sortedSections = botSettings.map(setting=>{return setting.section ?? 'Other'});
+    // let sortedSettings = sortedSections.sort((a,b)=>{
+    //   if(a.section < b.section) return 1;
+    //   else if (a.section > b.section) return -1;
+    //   else return 0;
+    // });
     let sections = [... new Set(sortedSections)]
     return sections;
   }
@@ -43,7 +50,7 @@
   
   
   <div class="flex">
-    <button on:click={()=>{saveSettings(botSettings)}}>Save Settings</button>
+    <!-- <button on:click={()=>{saveSettings(botSettings)}}>Save Settings</button> -->
   </div>
 </div>
 
