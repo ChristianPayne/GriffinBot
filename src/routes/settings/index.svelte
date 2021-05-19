@@ -1,15 +1,35 @@
 <script context="module">
-// export async function load({})
+  export async function load({ fetch }) {
+    const url = `./settings/settings.json`;
+    const rawRes = await fetch(url);
+    let res = await rawRes.json();
+    let settings = res;
+
+
+    if (rawRes.status) {
+      return {
+        props: {
+          settings
+        }
+      };
+    }
+
+    return {
+      status: 500,
+      error: new Error(`Could not load ${url}`)
+    };
+  }
 </script>
 
 <script lang="ts">
   import '../../app.css';
-  let botSettings = [];
-
+  export let settings = [];
+ 
   function getSettingSections (): string[] {
-    if(!botSettings) return;
+    
+    if(!settings) return;
 
-    let sortedSections = botSettings.map(setting=>{return setting.section ?? 'Other'});
+    let sortedSections = settings.map(setting=>{if(!setting.section) {setting.section = 'Other'} return setting.section ?? 'Other'});
     // let sortedSettings = sortedSections.sort((a,b)=>{
     //   if(a.section < b.section) return 1;
     //   else if (a.section > b.section) return -1;
@@ -18,17 +38,32 @@
     let sections = [... new Set(sortedSections)]
     return sections;
   }
+
+  async function saveSettings (settings) {
+
+    let body = await JSON.stringify(settings, null, " ")
+    
+    let rawRes = await fetch('./settings/settings.json', {
+      method: 'post',
+      headers: {
+        accept : 'application/json'
+      },
+      body
+    });
+    console.log(rawRes);
+    
+  }
 </script>
 
 <div>
   <h1>Settings</h1>
   {#each getSettingSections() as section}
     <h2>{section}</h2>
-    {#each botSettings as setting}
+    {#each settings as setting}
       {#if setting.section === section}
         <hr>
         <div class="space-between">
-          <p>{setting.name}</p>
+          <p>{setting.displayName}</p>
           
           {#if setting.type}
             {#if setting.type === 'color'}
@@ -50,7 +85,14 @@
   
   
   <div class="flex">
-    <!-- <button on:click={()=>{saveSettings(botSettings)}}>Save Settings</button> -->
+    <!-- <form 
+    action="/settings.json"
+    method="post"
+    on:submit={(event)=>{event.preventDefault(); console.log("Submitted");}}
+    >
+    <button type="submit">Save Settings</button> -->
+      <button on:click={()=>{saveSettings(settings)}}>Save Settings</button>
+    <!-- </form> -->
   </div>
 </div>
 

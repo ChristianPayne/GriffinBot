@@ -21,7 +21,7 @@
 					<a href="/layer">Layers</a>
 				</div>
 				<div>
-					<a href="https://draculatheme.com/" target="_blank">Styled by Dracula</a>
+					<a href="https://draculatheme.com/" target="_blank">Styled with Dracula</a>
 				</div>
 			</div>
 		</footer>
