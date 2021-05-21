@@ -1,16 +1,34 @@
 <script lang="ts">
-	import { getActiveLayer, loadSettings, activeLayerLoaded } from "$lib/GriffinBotStore";
-	getActiveLayer().catch((err)=>{console.error("Error getting active layer. ", err)});
-	
-  loadSettings();
+	import { activeLayerLoaded, navigateToPath, loadSettings, setActiveLayer } from "$lib/GriffinBotStore";
+  import { onMount } from "svelte";
+	import { navigating } from "$app/stores";
 
-	let showFooter = false;
-	showFooter = !$activeLayerLoaded;
+	onMount(async () => {
+		// console.log("Layout Mount");
+    // loadSettings();
+  });
+
+	navigating.subscribe((value)=>{
+		if(!value) return;
+
+		const ignoredpaths = ["/", "/layer", "/settings"];
+		const pathname = value.to.path;
+		console.log(pathname);
+
+		setActiveLayer(ignoredpaths.find(path => path === pathname) ? false : true);
+	});
+
+	let layerLoaded: boolean = true;
+
+	activeLayerLoaded.subscribe((value)=>{
+		layerLoaded = value;
+	});
+
 </script>
 
 <main>
 	<slot></slot>
-	{#if showFooter}
+	{#if !layerLoaded}
 		<div class="footer-space">&nbsp;</div>
 		<footer>
 			<hr>
@@ -25,5 +43,19 @@
 				</div>
 			</div>
 		</footer>
+	{:else}
+		<button id="back-button" on:click={()=>{navigateToPath('/layer')}}>Go Back</button>
 	{/if}
 </main>
+
+<style>
+	#back-button {
+		position: absolute;
+		top: 0;
+		left: 0;
+		min-width: 100%;
+		min-height: 100%;
+		margin: 0%;
+		opacity: 0%;
+	}
+</style>

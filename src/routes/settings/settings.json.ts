@@ -20,7 +20,6 @@ export async function get() {
 }
 
 export async function post(request) {
-  // console.log("Request: ", request);
   try {
     await fs.writeFileSync(settingsFilePath, request.body)
     return {

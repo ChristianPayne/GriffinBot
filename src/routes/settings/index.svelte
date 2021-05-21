@@ -1,29 +1,14 @@
 <script context="module">
-  export async function load({ fetch }) {
-    const url = `./settings/settings.json`;
-    const rawRes = await fetch(url);
-    let res = await rawRes.json();
-    let settings = res;
-
-
-    if (rawRes.status) {
-      return {
-        props: {
-          settings
-        }
-      };
-    }
-
-    return {
-      status: 500,
-      error: new Error(`Could not load ${url}`)
-    };
-  }
+  import { settings as _settings, navigateToPath} from "$lib/GriffinBotStore";
 </script>
 
 <script lang="ts">
   import '../../app.css';
-  export let settings = [];
+  let settings : any[];
+
+  _settings.subscribe((newArray)=> {
+    settings = newArray;
+  })
  
   function getSettingSections (): string[] {
     
@@ -84,15 +69,9 @@
   {/each}
   
   
-  <div class="flex">
-    <!-- <form 
-    action="/settings.json"
-    method="post"
-    on:submit={(event)=>{event.preventDefault(); console.log("Submitted");}}
-    >
-    <button type="submit">Save Settings</button> -->
-      <button on:click={()=>{saveSettings(settings)}}>Save Settings</button>
-    <!-- </form> -->
+  <div class="space-between">
+    <button on:click={()=>{navigateToPath('/')}}>Home</button>
+    <button on:click={()=>{saveSettings(settings)}}>Save Settings</button> 
   </div>
 </div>
 
