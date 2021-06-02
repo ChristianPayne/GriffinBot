@@ -1,4 +1,2 @@
 run:
-  worker:
-    command:
-      - node -r dotenv/config bot.js
+  worker: node -r dotenv/config bot.js
