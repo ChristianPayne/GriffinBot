@@ -1,0 +1,4 @@
+run:
+  worker:
+    command:
+      - node -r dotenv/config bot.js
