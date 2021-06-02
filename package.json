@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build:netlify": "tsc && vite build",
-    "build:heroku": "node -r dotenv/config bot.js",
     "serve": "vite preview",
     "start": "netlify dev",
+    "start:heroku": "node -r dotenv/config bot.js",
     "dev": "concurrently -n \"⚡️vite,👹tsc\" -c \"cyan,red\" \"vite\" \"tsc -w\""
   },
   "dependencies": {
