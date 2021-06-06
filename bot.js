@@ -42,6 +42,7 @@ app.post('/start', (req, res) => {
 app.post('/stop', (req, res) => {
   let {API_KEY} = req.body;
   if(!CheckAPIKey(API_KEY)) {res.status(400); res.send("Bad API Key!"); return;}
+  StopBot();
   res.send("Bot stopping.");
 })
 
