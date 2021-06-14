@@ -1,11 +1,54 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './tailwind.css'
-import { App } from './App'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './tailwind.css';
+import { App } from './App';
+
+import { mount, route, lazy } from 'navi';
+import { Router, View } from 'react-navi';
+import HelmetProvider from 'react-navi-helmet';
+
+import SideNav from './SideNav';
+import Settings from './Settings';
+import Server from './Server';
+// import GriffinBotServer from "./Server/grffinbot.js";
+
+const routes =
+  mount({
+    '/': route({
+      title: "GriffinBot",
+      data: {showSideNav: true},
+      view: <App />,
+    }),
+    '/settings': route({
+      title: "GriffinBot Settings",
+      data: {showSideNav: true},
+      view: <Settings />,
+    }),
+    '/server': route({
+      title: "GriffinBot Chat Server",
+      head: <>
+        <script src="public/comfy.min.js"></script>
+        <script src="public/griffinbot.js"></script>
+      </>,
+      data: {
+        showSideNav: false,
+        // bot: 
+      },
+      // getData: ()=>{return Promise.resolve()},
+      view: <Server/>,
+    }),
+    // '/product': lazy(() => import('./product')),
+  })
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <HelmetProvider> {/* Used to change the head of our app. */}
+      <Router routes={routes}> {/* Used to specify routes. */}
+        <SideNav> {/* Render our Side Nav component. */}
+          <View /> {/* Render whatever route we are viewing. */}
+        </SideNav>
+      </Router>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

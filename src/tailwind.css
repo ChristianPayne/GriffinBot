@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+#app {
+  min-height: 100vh;
+}
+
+#sidePanel {
+  min-width: 25%;
+  min-height: 100vh;
+}
