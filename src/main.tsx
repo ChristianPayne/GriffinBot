@@ -10,7 +10,9 @@ import HelmetProvider from 'react-navi-helmet';
 import SideNav from './SideNav';
 import Settings from './Settings';
 import Server from './Server';
-// import GriffinBotServer from "./Server/grffinbot.js";
+
+import { config } from 'dotenv';
+config();
 
 const routes =
   mount({
@@ -28,11 +30,10 @@ const routes =
       title: "GriffinBot Chat Server",
       head: <>
         <script src="public/comfy.min.js"></script>
-        <script src="public/griffinbot.js"></script>
+        <script src="public/griffinbot.js" defer></script>
       </>,
       data: {
         showSideNav: false,
-        // bot: 
       },
       // getData: ()=>{return Promise.resolve()},
       view: <Server/>,

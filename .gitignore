@@ -1,5 +1,6 @@
 .censitive
 .vscode
+.faunarc
 
 # Logs
 logs
