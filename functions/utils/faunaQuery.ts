@@ -9,10 +9,10 @@ const {
   Function : Fn
 } = q;
 
-const FAUNA_KEY: string = process.env.FAUNA_KEY ? process.env.FAUNA_KEY : "";
+const FAUNA_KEY: string = process.env.FAUNADB_SERVER_SECRET ? process.env.FAUNADB_SERVER_SECRET : "";
 
 console.log(`Fauna Key : ${FAUNA_KEY.length}`);
-// console.log(`ENV: `, process.env);
+console.log(`ENV: `, process.env);
 
 const client = new faunadb.Client({
   secret: FAUNA_KEY
