@@ -9,19 +9,25 @@ const {
   Function : Fn
 } = q;
 
-const FAUNA_KEY: string = process.env.FAUNADB_SERVER_SECRET ? process.env.FAUNADB_SERVER_SECRET : "";
-
-console.log(`Fauna Key : ${FAUNA_KEY.length}`);
-console.log(`ENV: `, process.env);
+const FAUNA_KEY: string = process.env.FAUNADB_SERVER_KEY ? process.env.FAUNADB_SERVER_KEY : "";
 
 const client = new faunadb.Client({
   secret: FAUNA_KEY
 });
 
 
-export const getUserByUsername = async (username: string) => {
-  let result : {data:{}} = await client.query(
-    Call(Fn("getUserByUsername"), username)
+export const getCommandsByUsername = async (username: string) => {  
+  let queryResult: {data:[]} = await client.query(
+    Call(Fn("getCommandsByUsername"), username)
     );
-  return result.data;
+    console.log(queryResult);
+    
+
+  let result = queryResult.data.map((element: {data:{}}) => {
+    return element.data;
+  });
+
+  console.log(`Result: ${result}`);
+  
+  return result;
 }

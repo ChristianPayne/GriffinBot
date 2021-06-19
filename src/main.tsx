@@ -11,8 +11,8 @@ import SideNav from './SideNav';
 import Settings from './Settings';
 import Server from './Server';
 
-import { config } from 'dotenv';
-config();
+// import { config } from 'dotenv';
+// config();
 
 const routes =
   mount({

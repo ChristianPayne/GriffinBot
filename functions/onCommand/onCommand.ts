@@ -1,17 +1,30 @@
 import { Handler } from '@netlify/functions';
-import { getUserByUsername } from "../utils/faunaQuery";
+import { getCommandsByUsername } from "../utils/faunaQuery";
 
 
-const handler: Handler = async (event) => {
+const handler: Handler = async (event:any) => {
   try {
-    console.log("onCommand Handler");
-    
-    let result = await getUserByUsername("ChrisGriffin522");
+    console.log("onCommand Handler :: Init");
 
-    return {
+    let eventData = JSON.parse(event.body);
+
+    console.log(`Event received :: ${JSON.stringify(event, null, " ")}`);
+    
+    
+    let result = await getCommandsByUsername("ChrisGriffin522");
+    
+    console.log(`onCommand Handler :: Fauna result :: ${result}`);
+
+    const data = {
       statusCode: 200,
       body: JSON.stringify(result),
     }
+
+    console.log(`onCommand Handler :: Returning ${data}`);
+
+    
+
+    return data;
   } catch (error) {
     return { 
       statusCode: 500, 
