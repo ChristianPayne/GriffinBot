@@ -3,26 +3,36 @@ const ComfyJS = window.ComfyJS;
 function fetchEndpoint (endpoint, data) {
   console.log(`Sending data to endpoint: ${endpoint} : `, data);
 
-  fetch(endpoint, {
+  return fetch(endpoint, {
     method: "POST",
     body: JSON.stringify(data)
-  })
-  .then(
-    async (res) => {
-      let data = await res.json();
-      ProcessResponse(data);
-    }
-  )
+  });
+  // .then(
+  //   async (res) => {
+  //     let data = await res.json();
+  //     ProcessResponse(data);
+  //   }
+  // )
 }
 
 function Init (channel) {
-  console.log("Init Bot!");
+  console.log("Init Bot!", ComfyJS);
 
-  ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
-    fetchEndpoint('api/onCommand', {user, command, message, flags, extra});
+  ComfyJS.onCommand = async ( user, command, message, flags, extra ) => {
+    let results = await fetchEndpoint('api/onCommand', {user, command, message, flags, extra})
+    results = await results.json();
+    console.log("Results from await are ", results);
+    
+    results.forEach( (result) => {
+      if(result.name === command)
+      {
+        ComfyJS.Say( result.response );
+      }
+    })
   }
   ComfyJS.onChat = ( user, message, flags, self, extra ) => {
     // fetchEndpoint('api/onChat', {user, message, flags, self, extra});
+    console.log(`Chat: ${user} : ${message}`);
   }
   ComfyJS.onWhisper = ( user, message, flags, self, extra ) => {
     // fetchEndpoint('api/onWhisper', {user, message, flags, self, extra});
@@ -73,7 +83,8 @@ function Init (channel) {
     // fetchEndpoint('api/onError', {error});
   }
   
-  ComfyJS.Init( channel );
+  const botOauth = localStorage.getItem("griffinbot_oauth");
+  ComfyJS.Init( channel, botOauth );
 }
 
 function ProcessResponse (res) {
@@ -91,8 +102,9 @@ function LeaveChat () {
 
 // GetSettings
 function ReadLocalStorage () {
-  const settings = JSON.parse(localStorage.getItem("GriffinBot_Settings"));
-  console.log(settings);
+  const settings = JSON.parse(localStorage.getItem("griffinbot_settings"));
+  
+  console.log('Settings: ', settings);
   if(!settings)
   {
     console.log("GriffinBot settings not found!");
@@ -100,14 +112,27 @@ function ReadLocalStorage () {
     SetLocalStorage();
     return;
   }
+
+  console.log("Comfy at execution", ComfyJS);
   
-  Init(settings.channel);
+  // TODO: I need the thing to do the thing.
+  setTimeout(() => {
+    console.log("Comfy at Timeout", ComfyJS);
+    if(!ComfyJS){
+      console.log("GriffinBot not initialized! ComfyJS not found.");
+    } else {
+      Init(settings.channel);
+    }
+  }, 1000);
+
+  
+  
 }
 
 function SetLocalStorage ()
 {
   const settings = JSON.stringify({channel: "ChrisGriffin522"});
-  localStorage.setItem("GriffinBot_Settings", settings);
+  localStorage.setItem("griffinbot_settings", settings);
 }
 
 ReadLocalStorage();

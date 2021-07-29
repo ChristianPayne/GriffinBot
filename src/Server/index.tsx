@@ -15,6 +15,11 @@ const Server = () => {
       <button onClick={()=>{}}>
         Leave Chat
       </button>
+      <button onClick={()=>{
+        
+      }}>
+        SAY SOMETHING
+      </button>
 
       <h1>{localStorage.getItem("griffinbot_settings")}</h1>
     </div>

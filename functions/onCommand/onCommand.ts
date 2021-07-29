@@ -11,7 +11,7 @@ const handler: Handler = async (event:any) => {
     console.log(`Event received :: ${JSON.stringify(event, null, " ")}`);
     
     
-    let result = await getCommandsByUsername("ChrisGriffin522");
+    let result = await getCommandsByUsername(eventData.extra.channel);
     
     console.log(`onCommand Handler :: Fauna result :: ${result}`);
 
