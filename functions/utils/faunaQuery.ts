@@ -20,14 +20,14 @@ export const getCommandsByUsername = async (username: string) => {
   let queryResult: {data:[]} = await client.query(
     Call(Fn("getCommandsByUsername"), username)
     );
-    console.log(queryResult);
+    // console.log(queryResult);
     
 
   let result = queryResult.data.map((element: {data:{}}) => {
     return element.data;
   });
 
-  console.log(`Result: ${result}`);
+  // console.log(`Result: ${result}`);
   
   return result;
 }

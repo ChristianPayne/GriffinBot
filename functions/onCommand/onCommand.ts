@@ -8,19 +8,20 @@ const handler: Handler = async (event:any) => {
 
     let eventData = JSON.parse(event.body);
 
-    console.log(`Event received :: ${JSON.stringify(event, null, " ")}`);
+    // console.log(`Event received :: ${JSON.stringify(event, null, " ")}`);
     
     
-    let result = await getCommandsByUsername(eventData.extra.channel);
+    // TODO: Change this to be the channel name, not the username
+    let result = await getCommandsByUsername(eventData.user);
     
-    console.log(`onCommand Handler :: Fauna result :: ${result}`);
+    // console.log(`onCommand Handler :: Fauna result :: ${result}`);
 
     const data = {
       statusCode: 200,
       body: JSON.stringify(result),
     }
 
-    console.log(`onCommand Handler :: Returning ${data}`);
+    // console.log(`onCommand Handler :: Returning ${data}`);
 
     
 

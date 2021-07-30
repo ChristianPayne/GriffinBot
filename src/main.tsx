@@ -29,8 +29,6 @@ const routes =
     '/server': route({
       title: "GriffinBot Chat Server",
       head: <>
-        <script src="comfy.min.js"></script>
-        <script src="griffinbot.js" defer></script>
       </>,
       data: {
         showSideNav: false,

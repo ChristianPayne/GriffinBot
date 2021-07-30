@@ -8,7 +8,7 @@ const SideNav: FC<Props> = ({children}: Props) => {
 
   let route = useCurrentRoute();
 
-  console.log(route);
+  // console.log(route);
   
 
   const layers = [
