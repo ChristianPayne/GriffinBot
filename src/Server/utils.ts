@@ -13,6 +13,8 @@ export function getLocalStorageSettings () : LocalStorageSettings {
   let localStorageString = localStorage.getItem("griffinbot_settings") || "{}";
   let settings = JSON.parse(localStorageString);
 
+  settings.botOAuth = localStorage.getItem("griffinbot_oauth") || "";
+
   console.log('localStorageSettings', settings);
   
   return settings ? settings : {};

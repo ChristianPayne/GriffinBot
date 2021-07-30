@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Init } from "./bot";
-import { Command, LocalStorageCommands, LocalStorageSettings } from './types';
+import { Init,  } from "./bot";
 import { getLocalStorageSettings, getLocalStorageCommands, saveLocalStorageSettings, saveLocalStorageCommands } from "./utils";
 
 const Server = () => {
@@ -10,8 +9,8 @@ const Server = () => {
 
   useEffect(() => {
     // TODO: Add a local storage save to monitor commands and settings
-    setLocalStorageSettings(localStorageSettings);
-    setLocalStorageCommands(localStorageCommands);
+    saveLocalStorageSettings(localStorageSettings);
+    saveLocalStorageCommands(localStorageCommands);
     
   }, [localStorageSettings, localStorageCommands]);
 
@@ -25,7 +24,7 @@ const Server = () => {
   function saveBotSettings () {
     // console.log( "Saving settings" );
     setLocalStorageSettings({
-      channel: "Ennegineer",
+      channel: "ChrisGriffin522",
     });
   }
 
@@ -42,7 +41,8 @@ const Server = () => {
     <div>
       Server is being rendered on the client.
 
-      {localStorageSettings.channel === "" ? <p> WE NEED THE CHANNEL </p> : 
+      {localStorageSettings.channel === "" ? 
+      <p> WE NEED THE CHANNEL </p> : 
       <>
         <p> CHANNEL: {localStorageSettings.channel} </p>
       </>}
@@ -53,14 +53,6 @@ const Server = () => {
       <button onClick={clearBotSettings}>
         Clear Local Storage
       </button>
-      {/* <button onClick={()=>{}}>
-        Leave Chat
-      </button>
-      <button onClick={()=>{
-        
-      }}>
-        SAY SOMETHING
-      </button> */}
 
       <h1>{localStorage.getItem("griffinbot_settings")}</h1>
     </div>

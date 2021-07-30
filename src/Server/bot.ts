@@ -6,15 +6,51 @@ import {
 
 } from "./Handlers";
 
+// Bot settings
+const messageRateLimit = 1500;
 
+// Runtime variables
 // @ts-ignore
-export let ComfyJS : ComfyJSInstance = window.ComfyJS;
+let ComfyJS : ComfyJSInstance = window.ComfyJS;
+const botMessageQueue: string[] = [];
+let botChannel = "";
+let queueRunning = false;
+
+
+export function AddMessageToQueue(message: string) {
+  console.log(`Adding message to queue: ${message}`);
+  
+  botMessageQueue.push(message);
+
+  if(!queueRunning) {
+    MessageQueue();
+  }
+}
+
+function MessageQueue () {
+  queueRunning = true;
+  if (botMessageQueue.length > 0) {
+    const message = botMessageQueue.shift();
+    if(!message) {
+      return;
+    }
+    
+    ComfyJS.Say(message, botChannel);
+  
+    // Rate limit the message queue.
+    setTimeout(MessageQueue, messageRateLimit);
+  } else {
+    queueRunning = false;
+  }
+}
 
 export function Init (channel: string, botOAuth?: string): void {
   if(!ComfyJS) {
     // @ts-ignore
     ComfyJS = window.ComfyJS;
   }
+
+  botChannel = channel;
   // console.log("Init Bot!", ComfyJS);
 
   ComfyJS.onCommand = onCommand;
@@ -84,4 +120,6 @@ export function Init (channel: string, botOAuth?: string): void {
 
   console.log(`%cJoining channel ${channel}`, "color:green");
   ComfyJS.Init( channel, botOAuth );
+
+  
 }
