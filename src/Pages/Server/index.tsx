@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Init,  } from "./bot";
-import { getLocalStorageSettings, getLocalStorageCommands, saveLocalStorageSettings, saveLocalStorageCommands } from "./utils";
+import { getLocalStorageSettings, getLocalStorageCommands, saveLocalStorageSettings, saveLocalStorageCommands } from "../../Utils";
 
 const Server = () => {
 
@@ -35,6 +35,11 @@ const Server = () => {
     });
   }
 
+  function LoginWithTwitch () {
+    console.log( "Logging in with Twitch" );
+    // let endpoint = 
+  }
+
 
 
   return (
@@ -47,11 +52,14 @@ const Server = () => {
         <p> CHANNEL: {localStorageSettings.channel} </p>
       </>}
 
+      <button style={{padding: "1em", background: "purple"}} onClick={LoginWithTwitch}>
+        Login With Twitch
+      </button>
       <button style={{padding: "1em", background: "green"}} onClick={saveBotSettings}>
         Set Local Storage
       </button>
-      <button onClick={clearBotSettings}>
-        Clear Local Storage
+      <button style={{padding: "1em", background: "green"}} onClick={clearBotSettings}>
+      Clear Local Storage
       </button>
 
       <h1>{localStorage.getItem("griffinbot_settings")}</h1>

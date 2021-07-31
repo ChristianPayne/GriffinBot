@@ -28,6 +28,10 @@ const SideNav: FC<Props> = ({children}: Props) => {
       layerName: "Settings",
       link: '/settings'
     },
+    {
+      layerName: "Login",
+      link: '/auth'
+    },
   ]
 
   return (
@@ -38,7 +42,7 @@ const SideNav: FC<Props> = ({children}: Props) => {
           <p className="text-2xl underline">Routes</p>
             {
               layers.map((layer, index)=>{return (
-                <Link key={"link-button-"+index} href={layer.link} className="bg-dracula-blade p-6 text-dracula-darker font-semibold rounded-md my-5">
+                <Link key={"link-button-"+index} href={layer.link} prefetch={false} className="bg-dracula-blade p-6 text-dracula-darker font-semibold rounded-md my-5">
                   {layer.layerName}
                 </Link>
               )})

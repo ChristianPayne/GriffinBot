@@ -1,3 +1,21 @@
+// Account Types
+export type Account = {
+  email: string;
+  channel: string;
+  twitch_user_id: string;
+  twitch_access_token: string;
+  twitch_refresh_token: string;
+  api_key: string;
+}
+
+// Bot Types
+export type BotSettings = {
+  client_id: string;
+  client_secret: string;
+  redirect_uri: string;
+  scopes: string[];
+}
+
 export type Command = {
   enabled: boolean;
   channel: string;
@@ -7,6 +25,8 @@ export type Command = {
   userLevel: UserLevel;
 }
 
+
+// Server Types
 export type CommandType = "action" | "response";
 
 export type UserLevel = "broadcaster" | "mod" | "vip" | "viewer";

@@ -1,4 +1,4 @@
 import { onCommand } from "./onCommand";
 export {
-  onCommand
+  onCommand,
 }

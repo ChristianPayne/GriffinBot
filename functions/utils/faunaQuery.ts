@@ -15,6 +15,14 @@ const client = new faunadb.Client({
   secret: FAUNA_KEY
 });
 
+export const getBotSettings = async () => {
+  let queryResult: any = await client.query(
+    Call(Fn("getBotSettings"))
+  );
+
+  return queryResult;
+}
+
 
 export const getCommandsByUsername = async (username: string) => {  
   let queryResult: {data:[]} = await client.query(

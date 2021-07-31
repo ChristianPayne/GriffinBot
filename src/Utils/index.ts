@@ -1,6 +1,14 @@
-import { LocalStorageCommands, LocalStorageSettings } from "./types";
+import { LocalStorageCommands, LocalStorageSettings } from "../types";
 
-export function fetchEndpoint (endpoint: string , data: object) {
+export function getEndpoint(endpoint: string) {
+  console.log(`Sending data to endpoint: ${endpoint}`);
+  
+  return fetch(endpoint, {
+    method: "GET"
+  });
+}
+
+export function postEndpoint (endpoint: string , data: object) {
   console.log(`Sending data to endpoint: ${endpoint} : `, data);
 
   return fetch(endpoint, {
