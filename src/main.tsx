@@ -4,7 +4,7 @@ import './tailwind.css';
 import { App } from './Pages/App';
 
 import { mount, route, lazy, redirect, map, NotFoundError } from 'navi';
-import { NotFoundBoundary, Router, View } from 'react-navi';
+import { Link, NotFoundBoundary, Router, View } from 'react-navi';
 import HelmetProvider from 'react-navi-helmet';
 
 import SideNav from './Pages/SideNav';
@@ -39,12 +39,22 @@ const routes =
       // getData: ()=>{return Promise.resolve()},
       view: <Server/>,
     }),
+    '/login': route({
+      title: "Login | GriffinBot",
+      head: <>
+      </>,
+      data: {
+        showSideNav: false,
+      },
+      // getData: ()=>{return Promise.resolve()},
+      view: <p>Login! <Link href="/auth" prefetch={false}>Login With Twitch</Link></p>,
+    }),
     '/auth': route(async (req) => {
+      let code : string = "";
       if(!req.params.error){
-        let code = req.params.code;
+        code = req.params.code;
         if(!code){
-          let redirectURI = await getAuthRedirect();
-          document.location.href = redirectURI;
+          document.location.href = await getAuthRedirect();
         };
       }
 
@@ -56,7 +66,7 @@ const routes =
           showSideNav: true,
         },
         // getData: ()=>{return Promise.resolve()},
-        view: <Auth/>,
+        view: <Auth code={code}/>,
       }
     }),
     // TODO: Fix this. Wildcard route is not working.

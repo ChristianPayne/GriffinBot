@@ -1,10 +1,12 @@
 // Account Types
 export type Account = {
+  id: string;
   email: string;
   channel: string;
-  twitch_user_id: string;
-  twitch_access_token: string;
-  twitch_refresh_token: string;
+  displayName: string;
+  access_token: string;
+  refresh_token: string;
+  profileImageURL: string;
   api_key: string;
 }
 

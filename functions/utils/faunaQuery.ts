@@ -1,4 +1,5 @@
 import faunadb from "faunadb";
+import { Account, BotSettings } from "../../src/types";
 
 const q = faunadb.query;
 const {
@@ -15,8 +16,16 @@ const client = new faunadb.Client({
   secret: FAUNA_KEY
 });
 
-export const getBotSettings = async () => {
-  let queryResult: any = await client.query(
+export const getAccountById = async (id: string) : Promise<Account> => {
+  let queryResult: Account = await client.query(
+    Call(Fn("getAccountById"), id)
+  );
+
+  return queryResult;
+}
+
+export const getBotSettings = async () : Promise<BotSettings> => {
+  let queryResult: BotSettings = await client.query(
     Call(Fn("getBotSettings"))
   );
 
