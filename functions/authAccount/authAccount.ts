@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { client } from 'tmi.js';
-import { BotSettings } from '../../src/types';
+import { Account, BotSettings } from '../../src/types';
 import { getAccountById, getBotSettings } from "../utils/faunaQuery";
 const fetch = require("node-fetch");
 
@@ -8,6 +8,8 @@ const fetch = require("node-fetch");
 const handler: Handler = async (event) => {
   try {
     console.log("authAccount Handler");
+
+    let account: Account | null = null;
     
     let eventData: string = event.body ? event.body : "{}";
     let data = JSON.parse(eventData);
@@ -48,7 +50,7 @@ const handler: Handler = async (event) => {
     id_token: ${id_token}`);
     
 
-    // Fetch the user info
+    // Fetch the user info from Twitch.
     let userInfoResponse = await fetch(`https://api.twitch.tv/helix/users`, {
       method: 'GET',
       headers: {
@@ -60,20 +62,20 @@ const handler: Handler = async (event) => {
     // console.log(`User Info Response: `, userInfoResponse)
     
     let userInfoData = await userInfoResponse.json()
-    console.log(`User Info Data: `, userInfoData.data[0]);
+    console.log(`User Info Data From Twitch: `, userInfoData.data[0]);
 
     let { id, email, login, display_name, profile_image_url} = userInfoData.data[0];
 
     let accountLookup = await getAccountById(id);
 
-    console.log('Account Lookup', accountLookup);
+    console.log('Fauna Account Lookup', accountLookup);
 
     if(accountLookup.id === id){
       console.log(`Account already exists for ${id}, log them in.`);
+      account = accountLookup;
     }
     else {
       console.log(`Account does not exist for ${id}, create a new one.`);
-      
     }
     
 
@@ -83,12 +85,17 @@ const handler: Handler = async (event) => {
     
     return {
       statusCode: 200,
-      body: JSON.stringify(JWTData),
+      body: JSON.stringify({
+        account
+      }),
     }
   } catch (error) {
     return { 
       statusCode: 500, 
-      body: JSON.stringify({message: error.toString()})
+      body: JSON.stringify({
+        account: null,
+        message: error.toString()
+      })
     }
   }
 }

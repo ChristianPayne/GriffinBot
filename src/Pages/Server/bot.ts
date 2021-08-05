@@ -1,6 +1,8 @@
 import { 
   ComfyJSInstance
 } from 'comfy.js';
+import { Command } from '../../types';
+import { getEndpoint, postEndpoint } from '../../Utils';
 import { 
   onCommand,
 
@@ -15,6 +17,7 @@ let ComfyJS : ComfyJSInstance = window.ComfyJS;
 const botMessageQueue: string[] = [];
 let botChannel = "";
 let queueRunning = false;
+let commandsCache: Command[] = [];
 
 
 export function AddMessageToQueue(message: string) {
@@ -44,7 +47,7 @@ function MessageQueue () {
   }
 }
 
-export function Init (channel: string, botOAuth?: string): void {
+export async function Init (channel: string, botOAuth?: string) {
   if(!ComfyJS) {
     // @ts-ignore
     ComfyJS = window.ComfyJS;
@@ -52,6 +55,9 @@ export function Init (channel: string, botOAuth?: string): void {
 
   botChannel = channel;
   // console.log("Init Bot!", ComfyJS);
+
+  // Register commands
+  commandsCache = await getEndpoint('api/getCommandsByChannel');
 
   ComfyJS.onCommand = onCommand;
 

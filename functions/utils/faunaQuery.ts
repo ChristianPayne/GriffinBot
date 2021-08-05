@@ -1,5 +1,5 @@
 import faunadb from "faunadb";
-import { Account, BotSettings } from "../../src/types";
+import { Account, BotSettings, Command } from "../../src/types";
 
 const q = faunadb.query;
 const {
@@ -33,18 +33,13 @@ export const getBotSettings = async () : Promise<BotSettings> => {
 }
 
 
-export const getCommandsByUsername = async (username: string) => {  
-  let queryResult: {data:[]} = await client.query(
-    Call(Fn("getCommandsByUsername"), username)
+export const getCommandsByChannel = async (channel: string) => {  
+  let queryResult: { data: Command[] } = await client.query(
+    Call(Fn("getCommandsByChannel"), channel)
     );
-    // console.log(queryResult);
-    
+  // console.log("After Select:", queryResult);
 
-  let result = queryResult.data.map((element: {data:{}}) => {
-    return element.data;
-  });
-
-  // console.log(`Result: ${result}`);
+  console.log(`Result: ${queryResult}`);
   
-  return result;
+  return queryResult.data;
 }

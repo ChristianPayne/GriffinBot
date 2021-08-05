@@ -21,27 +21,6 @@ const Server = () => {
     Init( channel, botOAuth );
   }, [localStorageSettings]);
 
-  function saveBotSettings () {
-    // console.log( "Saving settings" );
-    setLocalStorageSettings({
-      channel: "ChrisGriffin522",
-    });
-  }
-
-  function clearBotSettings () {
-    // console.log( "Clearing settings" );
-    setLocalStorageSettings({
-      channel: "",
-    });
-  }
-
-  function LoginWithTwitch () {
-    console.log( "Logging in with Twitch" );
-    // let endpoint = 
-  }
-
-
-
   return (
     <div>
       Server is being rendered on the client.
@@ -51,18 +30,6 @@ const Server = () => {
       <>
         <p> CHANNEL: {localStorageSettings.channel} </p>
       </>}
-
-      <button style={{padding: "1em", background: "purple"}} onClick={LoginWithTwitch}>
-        Login With Twitch
-      </button>
-      <button style={{padding: "1em", background: "green"}} onClick={saveBotSettings}>
-        Set Local Storage
-      </button>
-      <button style={{padding: "1em", background: "green"}} onClick={clearBotSettings}>
-      Clear Local Storage
-      </button>
-
-      <h1>{localStorage.getItem("griffinbot_settings")}</h1>
     </div>
   );
 };
