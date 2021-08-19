@@ -1,20 +1,19 @@
 // Account Types
 export type Account = {
   id: string;
-  email: string;
   channel: string;
-  displayName: string;
-  access_token: string;
-  refresh_token: string;
-  profileImageURL: string;
-  api_key: string;
+  twitchDisplayName: string;
+  twitchAccessToken: string;
+  twitchRefreshToken: string;
+  twitchProfileImageURL: string;
+  apiKey: string;
 }
 
 // Bot Types
 export type BotSettings = {
-  client_id: string;
-  client_secret: string;
-  redirect_uri: string;
+  clientId: string;
+  clientSecret: string;
+  redirectUri: string;
   scopes: string[];
 }
 

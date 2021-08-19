@@ -1,21 +1,24 @@
 import { LocalStorageCommands, LocalStorageSettings } from "../types";
 
-export async function getEndpoint(endpoint: string) {
+export async function getEndpoint(endpoint: string, headers?: object) {
   console.log(`Sending data to endpoint: ${endpoint}`);
   let response = await fetch(endpoint, {
     method: "GET",
     headers: {
-      "channel" : "test",
+      ...headers,
     }
   });
   let results = await response.json();
   return results;
 }
 
-export async function postEndpoint (endpoint: string , data: object) {
+export async function postEndpoint (endpoint: string , data: object , headers?: object) {
   console.log(`Sending data to endpoint: ${endpoint} : `, data);
   let response = await fetch(endpoint, {
     method: "POST",
+    headers : {
+      ...headers
+    },
     body: JSON.stringify(data)
   });
 

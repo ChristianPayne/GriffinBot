@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect } from 'react';
-import { Link } from 'react-navi';
+import { Link, useNavigation } from 'react-navi';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import { postEndpoint } from '../../Utils';
 
@@ -10,6 +10,7 @@ type Props = {
 const Auth = ({ code }: Props) => {
 
   const {account, setAccount} = useContext(AuthContext);
+  let navigation = useNavigation();
 
   useEffect(() => {
     getAccountAuth();
@@ -17,11 +18,16 @@ const Auth = ({ code }: Props) => {
 
   async function getAccountAuth () {
     
-    let { account } = await postEndpoint('api/authAccount', {code})
-    setAccount(account);
-  
-    console.log('Frontend Auth Result', account);
+    let account = await postEndpoint('api/auth', {code}, {field: 'signin'})
 
+    if(account) {
+      setAccount(account);
+      console.log('Navigating to homepage from auth.');
+      
+      // TODO: Why is this rerendering with a null account?
+      navigation.navigate('/');
+      console.log('Frontend Auth Result', account);
+    }
   }
 
   

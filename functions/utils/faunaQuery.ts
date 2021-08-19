@@ -24,6 +24,14 @@ export const getAccountById = async (id: string) : Promise<Account> => {
   return queryResult;
 }
 
+export const createAccount = async (account: Account) : Promise<Account> => {
+  let queryResult: Account = await client.query(
+    Call(Fn("createAccount"), account)
+  );
+
+  return queryResult;
+}
+
 export const getBotSettings = async () : Promise<BotSettings> => {
   let queryResult: BotSettings = await client.query(
     Call(Fn("getBotSettings"))

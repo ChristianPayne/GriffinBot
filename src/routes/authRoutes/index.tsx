@@ -21,7 +21,8 @@ export default {
     if(!req.params.error){
       code = req.params.code;
       if(!code){
-        document.location.href = await getAuthRedirect();
+        let redirectURL = await getAuthRedirect();
+        document.location.href = redirectURL
       };
     }
 
