@@ -3,6 +3,7 @@ import { route } from 'navi';
 import Settings from '../../Pages/Settings';
 import Server from '../../Pages/Server';
 import { App } from '../../Pages/App';
+import Pepega from '../../Pages/Pepega';
 
 
 export default {
@@ -25,4 +26,12 @@ export default {
     view: <Server/>,
   }),
   
+  '/pepega': route({
+    title: "pepega | GriffinBot",
+    data: {
+      showSideNav: true,
+    },
+    getData: ()=>{return Promise.resolve()},
+    view: <Pepega/>,
+  }),
 }
