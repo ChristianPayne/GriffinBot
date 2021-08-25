@@ -1,8 +1,8 @@
-*, *::before, *::after{
+ *, *::before, *::after{
     box-sizing: border-box;
-}
+} 
 
- .backGround {
+ .pepega {   
     position: fixed;
     top: 0;
     left: 0;
@@ -13,16 +13,17 @@
   } 
   
 /* Logo style */
-h1 {
+ .pepega h1 {
     font-family: Helvetica, sans-serif;
     position: relative;
     font-size: 30px;
     left: 300px;
     color: rgb(78, 253, 102);
+    display: inline-block;
 }
 
 /* First header style */
-h2 {
+ .pepega h2 {
     position: absolute;
     top: 200px;
     width: 100%;
@@ -33,10 +34,11 @@ h2 {
     margin: 0;
     display: table-cell;
     vertical-align: middle;
-} 
+    text-decoration: underline;
+}  
 
 /* Paragraph style */
-p {
+ .pepega p {
     position: absolute;
     top: 280px;
     width: 100%;
@@ -47,8 +49,9 @@ p {
     margin: 0;
     display: table-cell;
     vertical-align: middle; 
-    word-spacing: 2px;
-}
+    word-spacing: 2px; 
+  }
+
 /* Connect with twitch button style and hover */
 .twitchButton{
     background-color: indigo;
@@ -67,7 +70,7 @@ p {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     cursor: pointer;
-}
+} 
 
 .twitchButton:hover {
     background-color: white; 
@@ -75,7 +78,7 @@ p {
 }
 
 /* Navbar style */
-ul {
+.pepega ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -86,25 +89,29 @@ ul {
     right: 200px;
   }
   
-  li {
+  .pepega li {
     float: right;
     font-family: Helvetica, sans-serif;
   }
   
-  li a {
+  .pepega li a {
     font-weight: bold;  
-    display: block;
+    display: inline-block;
     color: white;
     text-align: center;
     padding: 14px 16px;
   }
   
-  li a:hover {
+  .pepega li a:hover {
     background-color: rgb(78, 253, 102);
   }
 
-  .Login {
-      background-color: rgb(78, 253, 102);
+  .pepega h3 {
+    border: 15px solid rgb(78, 253, 102);
+    opacity: 80%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+    margin-top: 880px;
   }
-
-

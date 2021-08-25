@@ -26,7 +26,7 @@ export default {
     view: <Server/>,
   }),
   
-  '/pepega': route({
+  '/Pepega': route({
     title: "pepega | GriffinBot",
     data: {
       showSideNav: true,

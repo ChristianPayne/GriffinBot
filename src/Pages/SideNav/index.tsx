@@ -33,8 +33,8 @@ const SideNav: FC<Props> = ({children}: Props) => {
       link: '/login'
     },
     {
-      layerName: "pepega",
-      link: '/pepega'
+      layerName: "Pepega",
+      link: '/Pepega'
     },
   ]
 
